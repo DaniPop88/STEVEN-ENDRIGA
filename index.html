@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Steven Endriga General Store | Modern Clothing, Local Pride</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Steven Endriga General Store - Modern Clothing, Local Pride. Filipino fashion for men, women, and kids, curated for GenSan and beyond.">
+    <link rel="icon" type="image/png" href="image/FAVICON.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700,400|Lato:400,700&display=swap">
+    <style>
+        :root {
+            --primary-blue: #234a8c;
+            --accent-yellow: #ffd36b;
+            --text-dark: #1b2330;
+            --background-light: #f8f9fb;
+            --section-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 18px rgba(34,74,140,0.09);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', 'Lato', Arial, sans-serif;
+            background: var(--background-light);
+            color: var(--text-dark);
+        }
+        header {
+            background: var(--section-bg);
+            box-shadow: var(--box-shadow);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            transition: box-shadow 0.2s;
+        }
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 6vw 10px 6vw;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .logo-block {
+            display: flex;
+            align-items: center;
+        }
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(34,74,140,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .brand-title {
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-main {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+        .brand-main .blue {
+            color: var(--primary-blue);
+        }
+        .brand-main .yellow {
+            color: var(--accent-yellow);
+        }
+        .brand-sub {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            letter-spacing: 0.8px;
+            font-weight: 400;
+            margin-top: 3px;
+        }
+        nav {
+            position: relative;
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 32px;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        nav a {
+            font-family: 'Montserrat', Arial, sans-serif;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 1.08em;
+            font-weight: 600;
+            padding: 3px 0;
+            border-bottom: 2px solid transparent;
+            transition: color 0.18s, border-bottom 0.18s;
+        }
+        nav a:hover, nav a.active {
+            color: var(--accent-yellow);
+            border-bottom: 2px solid var(--accent-yellow);
+        }
+        /* Burger Button Styles - pojok kanan atas */
+        .burger {
+            position: absolute;
+            top: 8px;
+            right: 28px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            z-index: 1001;
+        }
+        .burger span {
+            display: block;
+            width: 26px;
+            height: 3px;
+            margin: 4px 0;
+            background: var(--primary-blue);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        /* Floating Cart Button Styles */
+        .floating-cart-btn {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 1002;
+            background: var(--accent-yellow);
+            color: var(--primary-blue);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            box-shadow: 0 4px 18px rgba(34,74,140,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+            transition: background 0.18s, box-shadow 0.18s;
+        }
+        .floating-cart-btn:hover {
+            background: #ffe082;
+            box-shadow: 0 8px 24px rgba(34,74,140,0.30);
+        }
+        .floating-cart-btn .cart-icon {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+        /* Cart Popup Styles */
+        .cart-popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(34,74,140,0.18);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-popup-overlay.active {
+            display: flex;
+        }
+        .cart-popup {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(34,74,140,0.15);
+            max-width: 400px;
+            width: 90vw;
+            padding: 28px 22px 22px 22px;
+            position: relative;
+            animation: fadeInScale 0.2s;
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95);}
+            to { opacity: 1; transform: scale(1);}
+        }
+        .cart-popup-title {
+            font-size: 1.13em;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .cart-popup-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 12px 0;
+        }
+        .cart-popup-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-popup-list .cart-item-name {
+            flex: 2;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        .cart-popup-list .cart-item-qty,
+        .cart-popup-list .cart-item-price {
+            flex: 1;
+            text-align: right;
+            color: #795548;
+        }
+        .cart-popup-summary {
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--primary-blue);
+            text-align: center;
+        }
+        .cart-popup-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+        .cart-popup-btn, .cart-popup-checkout-btn {
+            background: var(--primary-blue);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 9px 22px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .cart-popup-btn:hover, .cart-popup-checkout-btn:hover {
+            background: var(--accent-yellow);
+            color: var(--primary-blue);
+        }
+        .cart-popup-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: #234a8c;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        /* Responsive rules */
+        @media (max-width: 900px) {
+            .navbar { padding: 14px 2vw 8px 2vw; }
+            nav ul { gap: 18px; }
+        }
+        @media (max-width: 700px) {
+            .navbar { flex-direction: column; align-items: flex-start; }
+            .logo-block { margin-bottom: 8px; }
+            nav ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: var(--section-bg);
+                flex-direction: column;
+                gap: 8px;
+                margin: 0;
+                padding: 14px 20px;
+                width: 100vw;
+                box-shadow: var(--box-shadow);
+                transition: max-height 0.3s, opacity 0.3s;
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+                z-index: 999;
+            }
+            nav ul.open {
+                max-height: 320px;
+                opacity: 1;
+                overflow-y: auto;
+            }
+            .burger {
+                display: flex;
+                right: 32px;
+                top: 10px;
+            }
+        }
+        @media (max-width: 600px) {
+            section, main {
+                padding: 14px 1vw;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .logo-img { width: 56px; height: 56px; }
+            .brand-main { font-size: 1.3rem; }
+            .floating-cart-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.5em;
+                right: 16px;
+                bottom: 20px;
+            }
+            .cart-popup {
+                padding: 18px 7px 14px 7px;
+            }
+            .cart-popup-close {
+                top: 7px;
+                right: 11px;
+                font-size: 1.3em;
+            }
+        }
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 28px 3vw 20px 3vw;
+        }
+        section {
+            margin-bottom: 38px;
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 26px 28px;
+        }
+        .section-title {
+            font-size: 1.35em;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            color: var(--primary-blue);
+            letter-spacing: 0.5px;
+        }
+        .about-details, .mission-vision {
+            margin-bottom: 14px;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+            gap: 22px;
+        }
+        .product-card {
+            background: #f6faff;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(34,74,140,0.04);
+            padding: 16px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .product-img {
+            width: 120px;
+            height: 120px;
+            background: #e4eaf3;
+            border-radius: 9px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1em;
+            color: #b8c8e8;
+        }
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 9px;
+        }
+        .product-title {
+            font-size: 1.09em;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+            text-align: center;
+            color: var(--primary-blue);
+        }
+        .product-desc {
+            font-size: 0.99em;
+            color: #234a8c;
+            margin-bottom: 7px;
+            text-align: center;
+        }
+        .product-info {
+            font-size: 0.97em;
+            margin-bottom: 6px;
+            text-align: center;
+            color: #555;
+        }
+        .product-price {
+            font-weight: 700;
+            color: var(--accent-yellow);
+            font-size: 1.09em;
+            margin-bottom: 10px;
+        }
+        .add-cart-btn {
+            background: var(--primary-blue);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.18s;
+            margin-top: 5px;
+            box-shadow: 0 2px 6px rgba(34,74,140,0.07);
+        }
+        .add-cart-btn:hover {
+            background: var(--accent-yellow);
+            color: var(--primary-blue);
+        }
+        /* Cart Styles */
+        #cart-section {
+            background: #fffde7;
+            border: 1px solid #ffd36b;
+        }
+        .cart-title {
+            font-size: 1.18em;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+        }
+        .cart-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 10px 0;
+        }
+        .cart-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-list .cart-item-name {
+            flex: 2;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        .cart-list .cart-item-qty,
+        .cart-list .cart-item-price {
+            flex: 1;
+            text-align: right;
+            color: #795548;
+        }
+        .cart-summary {
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--primary-blue);
+        }
+        .checkout-btn {
+            background: var(--primary-blue);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 9px 22px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .checkout-btn:hover { background: var(--accent-yellow); color: var(--primary-blue);}
+        /* Footer Styles */
+        footer {
+            background: var(--primary-blue);
+            color: #fff;
+            text-align: center;
+            padding: 24px 3vw 16px 3vw;
+            margin-top: 0;
+            font-size: 0.99em;
+            border-top: 5px solid var(--accent-yellow);
+        }
+        .footer-links {
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: #fff;
+            text-decoration: underline;
+            margin: 0 18px;
+            transition: color 0.18s;
+        }
+        .footer-links a:hover { color: var(--accent-yellow); }
+        .footer-company {
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .footer-legal {
+            font-size: 0.95em;
+            margin-top: 6px;
+            color: var(--accent-yellow);
+        }
+        blockquote {
+            background: #f6faff;
+            border-left: 5px solid var(--primary-blue);
+            margin: 12px 0;
+            padding: 13px 18px;
+            border-radius: 6px;
+            font-size: 1em;
+            color: #234a8c;
+        }
+        .burger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+        .burger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .burger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header">
+        <div class="navbar">
+            <div class="logo-block">
+                <div class="logo-img">
+                    <img src="image/LOGO.png" alt="Steven Endriga General Store Logo">
+                </div>
+                <div class="brand-title">
+                    <span class="brand-main"><span class="blue">STEVEN</span> <span class="yellow">ENDRIGA</span></span>
+                    <span class="brand-sub">GENERAL STORE</span>
+                </div>
+            </div>
+            <nav>
+                <button class="burger" id="burger-btn" aria-label="Menu" aria-expanded="false" aria-controls="navbar-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul id="navbar-menu">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#cart-section">Cart</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Floating Cart Button -->
+    <button class="floating-cart-btn" id="floating-cart-btn" title="Go to cart">
+        <svg class="cart-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="28" r="2.5" fill="#234a8c"/>
+            <circle cx="24" cy="28" r="2.5" fill="#234a8c"/>
+            <path d="M5 6h3.5l2.8 15.3c.1.7.7 1.2 1.4 1.2h10.5c.7 0 1.3-.5 1.4-1.2L26.5 11h-16" stroke="#234a8c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+    <!-- Cart Popup Modal -->
+    <div class="cart-popup-overlay" id="cart-popup-overlay">
+        <div class="cart-popup" id="cart-popup">
+            <button class="cart-popup-close" id="cart-popup-close" aria-label="Close">&times;</button>
+            <div class="cart-popup-title">Your Shopping Cart</div>
+            <ul class="cart-popup-list" id="cart-popup-list">
+                <!-- Cart items will appear here -->
+            </ul>
+            <div class="cart-popup-summary" id="cart-popup-summary">Total: ₱0.00</div>
+            <div class="cart-popup-btns">
+                <button class="cart-popup-btn" id="cart-popup-goto-cart">View Full Cart</button>
+                <button class="cart-popup-checkout-btn" id="cart-popup-checkout">Checkout</button>
+            </div>
+        </div>
+    </div>
+    <main>
+        <section id="home">
+            <h2 class="section-title">Modern Clothing, Local Pride.</h2>
+            <p>
+                Welcome to <strong>Steven Endriga General Store</strong>!<br>
+                Your trusted neighborhood clothing destination in General Santos City. We offer trendy everyday wear, office attire, and classic Filipino designs—there’s something for every Juan and Maria.
+            </p>
+            <p>
+                Founded by Steven Endriga, our store blends modern fashion with Filipino values.<br>
+                <em>“Preskong porma, presyong abot-kaya!”</em>
+            </p>
+            <p>
+                Discover why our shop is the top choice for affordable style in Region XII!
+            </p>
+        </section>
+        <section id="about">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-details">
+                <strong>Our Humble Beginnings</strong><br>
+                Established in 2015, Steven Endriga General Store was born out of a desire to offer quality clothing for hardworking Filipinos. Our journey began as a small shop in Barangay Poblacion, General Santos City—growing thanks to loyal customers and word-of-mouth.
+            </div>
+            <div class="about-details">
+                <strong>What We Stand For:</strong>
+                <ul>
+                    <li>Makabayan Fashion – Celebrating local craftsmanship and design</li>
+                    <li>Affordability Without Compromise – Great style for all budgets</li>
+                    <li>Customer-First Approach – Service with a smile</li>
+                </ul>
+            </div>
+            <div class="mission-vision">
+                <strong>Mission:</strong> Empower every Filipino to express themselves through affordable, stylish clothing.<br>
+                <strong>Vision:</strong> Become Mindanao’s leading fashion retail brand by honoring our roots and embracing modern fashion.
+            </div>
+        </section>
+        <!-- Featured Products Section now after About Us -->
+        <section id="products">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="image/placeholder1.png" alt="Women's Blouse">
+                    </div>
+                    <div class="product-title">Casual Blouse</div>
+                    <div class="product-desc">Stylish and comfortable. Perfect for any day.</div>
+                    <div class="product-info">Qty: 10</div>
+                    <div class="product-price">₱349.00</div>
+                    <button class="add-cart-btn" onclick="addToCart('Casual Blouse', 1, 349)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="image/placeholder2.png" alt="Men's Polo Shirt">
+                    </div>
+                    <div class="product-title">Men's Polo Shirt</div>
+                    <div class="product-desc">Classic fit for work or play.</div>
+                    <div class="product-info">Qty: 5</div>
+                    <div class="product-price">₱399.00</div>
+                    <button class="add-cart-btn" onclick="addToCart('Men\'s Polo Shirt', 1, 399)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="image/placeholder3.png" alt="Kids' Bundle">
+                    </div>
+                    <div class="product-title">Kids' Clothing Bundle</div>
+                    <div class="product-desc">Affordable outfits for school and play.</div>
+                    <div class="product-info">Qty: 8</div>
+                    <div class="product-price">₱599.00</div>
+                    <button class="add-cart-btn" onclick="addToCart('Kids\' Clothing Bundle', 1, 599)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="image/placeholder4.png" alt="Filipiniana Dress">
+                    </div>
+                    <div class="product-title">Filipiniana Dress</div>
+                    <div class="product-desc">Modern Filipiniana for special occasions.</div>
+                    <div class="product-info">Qty: 6</div>
+                    <div class="product-price">₱899.00</div>
+                    <button class="add-cart-btn" onclick="addToCart('Filipiniana Dress', 1, 899)">Add to Cart</button>
+                </div>
+            </div>
+        </section>
+        <section id="cart-section">
+            <div class="cart-title">Your Shopping Cart</div>
+            <ul class="cart-list" id="cart-list">
+            </ul>
+            <div class="cart-summary" id="cart-summary">Total: ₱0.00</div>
+            <button class="checkout-btn" onclick="checkoutCart()">Checkout</button>
+        </section>
+        <section id="contact">
+            <h2 class="section-title">Contact Us</h2>
+            <ul>
+                <li><strong>Store Address:</strong> #12 Aguinaldo Street, Barangay Poblacion, 9500 General Santos City, Region XII, SOCCSKSARGEN, Philippines</li>
+                <li><strong>Phone:</strong> <a href="tel:+639569017382">+63 956 901 7382</a></li>
+                <li><strong>Email:</strong> <a href="mailto:contact@stevenendriga-store.com">contact@stevenendriga-store.com</a></li>
+                <li><strong>Business Hours:</strong>
+                    <ul>
+                        <li>Monday to Saturday: 9:00 AM – 7:00 PM</li>
+                        <li>Sunday: 10:00 AM – 5:00 PM</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section id="testimonials">
+            <h2 class="section-title">Customer Testimonials</h2>
+            <blockquote>“Napaka-affordable ng items! I always shop here for my kids.”<br>
+                <span style="font-size:0.95em;">– Mariel R., Barangay Dadiangas</span>
+            </blockquote>
+            <blockquote>“Solid ang service. They even helped me with gift ideas.”<br>
+                <span style="font-size:0.95em;">– Joseph T., from Lagao</span>
+            </blockquote>
+            <blockquote>“Comfortable at stylish! Pang-office or pang-lakad, meron sila.”<br>
+                <span style="font-size:0.95em;">– Ana Mae B., working professional</span>
+            </blockquote>
+        </section>
+        <section id="faq">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <ul>
+                <li><strong>Q:</strong> Do you accept GCash or card payments?<br>
+                    <strong>A:</strong> Opo, we accept GCash, Maya, and all major credit/debit cards.</li>
+                <li><strong>Q:</strong> Can I order online?<br>
+                    <strong>A:</strong> We currently accept orders via Facebook Messenger and text. Full e-commerce coming soon!</li>
+                <li><strong>Q:</strong> May delivery po ba kayo?<br>
+                    <strong>A:</strong> Yes! We deliver within General Santos City for a minimal fee.</li>
+                <li><strong>Q:</strong> Do you allow returns?<br>
+                    <strong>A:</strong> Yes, within 7 days with receipt and tags intact.</li>
+            </ul>
+        </section>
+        <section id="delivery">
+            <h2 class="section-title">Delivery Information</h2>
+            <ul>
+                <li><strong>Coverage:</strong> General Santos City & selected South Cotabato areas</li>
+                <li><strong>Fees:</strong> ₱50–₱100 (Free above ₱2,000)</li>
+                <li><strong>How to Order:</strong> Message on Facebook, call/text, or email. All orders confirmed before dispatch.</li>
+                <li><strong>Payment Methods:</strong> GCash, Maya, Bank Transfer, COD</li>
+            </ul>
+        </section>
+        <section id="legal">
+            <h2 class="section-title">Legal & Business Information</h2>
+            <ul>
+                <li><strong>Business Name:</strong> Steven Endriga General Store</li>
+                <li><strong>Business Registration No.:</strong> 1927-078832-GSC</li>
+                <li><strong>TIN:</strong> 009-374-829</li>
+                <li><strong>DTI Permit:</strong> Valid until November 2025</li>
+                <li><strong>Registered in:</strong> City of General Santos</li>
+                <li><strong>VAT Registered:</strong> Yes</li>
+                <li><strong>Barangay Clearance:</strong> Issued January 2024</li>
+                <li><strong>Fire & Safety Compliance:</strong> Passed Q1 2025</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a> |
+            <a href="terms.html">Terms of Service</a> |
+            <a href="refund-policy.html">Refund Policy</a>
+        </div>
+        <div class="footer-company">Steven Endriga General Store &copy; 2025</div>
+        <div class="footer-legal">
+            All rights reserved. Business Reg. No. 1927-078832-GSC | DTI Permit Valid until Nov 2025
+        </div>
+    </footer>
+    <script>
+        // Cart Functionality
+        let cart = [];
+        function addToCart(name, qty, price) {
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                cart.push({ name, qty, price });
+            }
+            updateCartDisplay();
+            updateCartPopupDisplay();
+        }
+        function updateCartDisplay() {
+            const cartList = document.getElementById('cart-list');
+            cartList.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                total += item.qty * item.price;
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="cart-item-name">${item.name}</span>
+                    <span class="cart-item-qty">x${item.qty}</span>
+                    <span class="cart-item-price">₱${(item.qty * item.price).toFixed(2)}</span>
+                    <button style="background:#F44336;color:#fff;border:none;padding:4px 10px;border-radius:3px;cursor:pointer;margin-left:10px;" onclick="removeCartItem('${item.name}')">Remove</button>
+                `;
+                cartList.appendChild(li);
+            });
+            document.getElementById('cart-summary').textContent = 'Total: ₱' + total.toFixed(2);
+        }
+        function removeCartItem(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartDisplay();
+            updateCartPopupDisplay();
+        }
+        function checkoutCart() {
+            window.location.href = "order-summary.html";
+        }
+        // Burger Button Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            var burger = document.getElementById('burger-btn');
+            var navMenu = document.getElementById('navbar-menu');
+            burger.addEventListener('click', function() {
+                burger.classList.toggle('active');
+                navMenu.classList.toggle('open');
+                burger.setAttribute('aria-expanded', navMenu.classList.contains('open') ? 'true' : 'false');
+            });
+            var navLinks = navMenu.querySelectorAll('a');
+            navLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 700) {
+                        navMenu.classList.remove('open');
+                        burger.classList.remove('active');
+                        burger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+            // Floating Cart Button opens cart popup
+            var floatCartBtn = document.getElementById('floating-cart-btn');
+            var cartPopupOverlay = document.getElementById('cart-popup-overlay');
+            var cartPopupClose = document.getElementById('cart-popup-close');
+            var cartPopupGotoCart = document.getElementById('cart-popup-goto-cart');
+            var cartPopupCheckout = document.getElementById('cart-popup-checkout');
+
+            floatCartBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                updateCartPopupDisplay();
+                cartPopupOverlay.classList.add('active');
+            });
+            cartPopupClose.addEventListener('click', function() {
+                cartPopupOverlay.classList.remove('active');
+            });
+            cartPopupOverlay.addEventListener('click', function(e){
+                if (e.target === cartPopupOverlay) {
+                    cartPopupOverlay.classList.remove('active');
+                }
+            });
+            cartPopupGotoCart.addEventListener('click', function() {
+                cartPopupOverlay.classList.remove('active');
+                document.getElementById('cart-section').scrollIntoView({behavior: "smooth"});
+            });
+            cartPopupCheckout.addEventListener('click', function() {
+                window.location.href = "order-summary.html";
+            });
+        });
+        function updateCartPopupDisplay() {
+            var cartPopupList = document.getElementById('cart-popup-list');
+            var cartPopupSummary = document.getElementById('cart-popup-summary');
+            cartPopupList.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                total += item.qty * item.price;
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="cart-item-name">${item.name}</span>
+                    <span class="cart-item-qty">x${item.qty}</span>
+                    <span class="cart-item-price">₱${(item.qty * item.price).toFixed(2)}</span>
+                `;
+                cartPopupList.appendChild(li);
+            });
+            cartPopupSummary.textContent = 'Total: ₱' + total.toFixed(2);
+        }
+        // Sticky header shadow effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 15) {
+                header.style.boxShadow = '0 4px 18px rgba(34,74,140,0.18)';
+            } else {
+                header.style.boxShadow = '0 4px 18px rgba(34,74,140,0.09)';
+            }
+        });
+    </script>
+</body>
+</html>
