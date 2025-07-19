@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Summary | Steven Endriga General Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Review your order summary and complete your purchase with Steven Endriga General Store. Professional, friendly service for GenSan and beyond.">
+    <link rel="icon" type="image/png" href="image/FAVICON.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700,400|Lato:400,700&display=swap">
+    <style>
+        :root {
+            --primary-blue: #234a8c;
+            --accent-yellow: #ffd36b;
+            --background-light: #f8f9fb;
+            --section-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 18px rgba(34,74,140,0.09);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', 'Lato', Arial, sans-serif;
+            background: var(--background-light);
+            color: #222d3a;
+            font-size: 1em;
+        }
+        header {
+            background: var(--section-bg);
+            box-shadow: var(--box-shadow);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 6vw 10px 6vw;
+            flex-wrap: wrap;
+        }
+        .logo-block {
+            display: flex;
+            align-items: center;
+        }
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            margin-right: 16px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(34,74,140,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .brand-title {
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-main {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+        }
+        .brand-main .blue {
+            color: var(--primary-blue);
+        }
+        .brand-main .yellow {
+            color: var(--accent-yellow);
+        }
+        .brand-sub {
+            font-size: 1rem;
+            color: #222d3a;
+            letter-spacing: 0.8px;
+            font-weight: 400;
+            margin-top: 3px;
+        }
+        main {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px 14px 20px 14px;
+        }
+        section {
+            margin-bottom: 32px;
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 22px 20px;
+        }
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin: 0 0 18px 0;
+            color: var(--primary-blue);
+            letter-spacing: 0.4px;
+            text-align: center;
+        }
+        .order-summary-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+        }
+        .order-summary-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 8px 0;
+            border-bottom: 1px solid #eaeaea;
+        }
+        .order-product-name {
+            font-weight: 600;
+            color: var(--primary-blue);
+            flex: 2;
+        }
+        .order-product-qty {
+            font-size: 0.97em;
+            color: #555;
+            flex: 1;
+            text-align: right;
+        }
+        .order-product-price {
+            font-weight: 700;
+            color: var(--accent-yellow);
+            flex: 1;
+            text-align: right;
+        }
+        .order-summary-total {
+            font-weight: 700;
+            font-size: 1.12em;
+            color: var(--primary-blue);
+            text-align: right;
+            margin-bottom: 18px;
+        }
+        .order-details-form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #234a8c;
+        }
+        .order-details-form input, 
+        .order-details-form select,
+        .order-details-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 14px;
+            border: 1px solid #d3dbe7;
+            border-radius: 5px;
+            font-size: 1em;
+            background: #f8f9fb;
+        }
+        .form-row {
+            display: flex;
+            gap: 18px;
+        }
+        .form-row > div {
+            flex: 1;
+        }
+        .submit-btn {
+            width: 100%;
+            background: var(--primary-blue);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 0;
+            font-size: 1.11em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.18s;
+            margin-top: 8px;
+        }
+        .submit-btn:hover {
+            background: var(--accent-yellow);
+            color: var(--primary-blue);
+        }
+        .confirmation-message {
+            background: #fffde7;
+            padding: 26px 16px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            color: #234a8c;
+            margin-top: 22px;
+        }
+        .confirmation-title {
+            font-size: 1.18em;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+        }
+        .confirmation-instructions {
+            font-size: 1em;
+            margin-bottom: 12px;
+        }
+        .important-note {
+            background: #ffecb3;
+            color: #795548;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        footer {
+            background: var(--primary-blue);
+            color: #fff;
+            text-align: center;
+            padding: 20px 3vw 14px 3vw;
+            font-size: 0.99em;
+            border-top: 5px solid var(--accent-yellow);
+        }
+        .footer-links {
+            margin-bottom: 8px;
+        }
+        .footer-links a {
+            color: #fff;
+            text-decoration: underline;
+            margin: 0 12px;
+            transition: color 0.18s;
+        }
+        .footer-links a:hover { color: var(--accent-yellow); }
+        .footer-company {
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        @media (max-width: 600px) {
+            main {
+                padding: 10px 4px 12px 4px;
+            }
+            section {
+                padding: 16px 8px;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo-block">
+                <div class="logo-img">
+                    <img src="image/LOGO.png" alt="Steven Endriga General Store Logo">
+                </div>
+                <div class="brand-title">
+                    <span class="brand-main"><span class="blue">STEVEN</span> <span class="yellow">ENDRIGA</span></span>
+                    <span class="brand-sub">GENERAL STORE</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section>
+            <h2 class="section-title">Order Overview</h2>
+            <ul class="order-summary-list" id="order-summary-list">
+                <li>
+                    <span class="order-product-name">Casual Blouse</span>
+                    <span class="order-product-qty">Qty: 2</span>
+                    <span class="order-product-price">₱698.00</span>
+                </li>
+                <li>
+                    <span class="order-product-name">Men's Polo Shirt</span>
+                    <span class="order-product-qty">Qty: 1</span>
+                    <span class="order-product-price">₱399.00</span>
+                </li>
+                <li>
+                    <span class="order-product-name">Kids' Clothing Bundle</span>
+                    <span class="order-product-qty">Qty: 1</span>
+                    <span class="order-product-price">₱599.00</span>
+                </li>
+            </ul>
+            <div class="order-summary-total" id="order-summary-total">
+                Total: ₱1,696.00
+            </div>
+        </section>
+        <section>
+            <h2 class="section-title">Customer Information</h2>
+            <form class="order-details-form" id="order-details-form" autocomplete="on">
+                <div class="form-row">
+                    <div>
+                        <label for="fullName">Name</label>
+                        <input type="text" id="fullName" name="fullName" required placeholder="Your full name">
+                    </div>
+                    <div>
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="e.g. 09XX-XXX-XXXX">
+                    </div>
+                </div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="your@email.com">
+                <label for="address">Delivery Address</label>
+                <textarea id="address" name="address" rows="2" required placeholder="Full address"></textarea>
+                <label for="payment">Preferred Payment Method</label>
+                <select id="payment" name="payment" required>
+                    <option value="">Select Payment Method</option>
+                    <option value="GCash">GCash</option>
+                    <option value="Maya">Maya</option>
+                    <option value="Bank Transfer">Bank Transfer (BDO/Metrobank)</option>
+                    <option value="COD">Cash on Delivery</option>
+                </select>
+                <button class="submit-btn" type="submit" id="submitOrderBtn">Submit Order</button>
+            </form>
+            <div id="confirmationPopup" style="display:none;">
+                <div class="confirmation-message">
+                    <div class="confirmation-title">Order Received!</div>
+                    <div class="confirmation-instructions">
+                        Thank you for placing your order with Steven Endriga General Store.<br>
+                        One of our team members will reach out to you shortly to confirm your order details, including product color, stock availability, and other preferences.<br>
+                        Please review and verify the details when contacted, so we can process your order quickly and accurately.
+                    </div>
+                    <div class="important-note">
+                        Once you've verified your order, we'll send you a payment link according to your selected payment method.<br>
+                        Kindly complete your payment within <strong>24 hours</strong>. Unpaid orders will be automatically cancelled after this period.
+                    </div>
+                    <div style="margin-top:10px;">
+                        For any questions or changes, please contact us at <a href="mailto:contact@stevenendriga-store.com">contact@stevenendriga-store.com</a> or call <a href="tel:+639569017382">+63 956 901 7382</a>.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a> |
+            <a href="terms.html">Terms of Service</a> |
+            <a href="refund-policy.html">Refund Policy</a>
+        </div>
+        <div class="footer-company">Steven Endriga General Store &copy; 2025</div>
+        <div class="footer-legal">
+            All rights reserved. Business Reg. No. 1927-078832-GSC | DTI Permit Valid until Nov 2025
+        </div>
+    </footer>
+    <script>
+        document.getElementById('order-details-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('order-details-form').style.display = 'none';
+            document.getElementById('confirmationPopup').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('confirmationPopup').offsetTop, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
